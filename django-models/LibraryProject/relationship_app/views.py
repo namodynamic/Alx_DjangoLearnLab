@@ -6,6 +6,9 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 
 
+def index(request):
+    return render(request, template_name="relationship_app/index.html")
+
 def list_books(request):
     books = Book.objects.all()
     context = {"books": books}

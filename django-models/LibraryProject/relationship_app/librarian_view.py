@@ -7,4 +7,4 @@ def is_librarian(user):
 
 @user_passes_test(is_librarian)
 def librarian_dashboard(request):
-    return render(request, 'librarian.html')
+    return render(request, 'relationship_app/librarian.html')

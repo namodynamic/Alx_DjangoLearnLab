@@ -6,4 +6,4 @@ def is_member(user):
 
 @user_passes_test(is_member)
 def member_dashboard(request):
-    return render(request, 'member.html')
+    return render(request, 'relationship_app/member.html')

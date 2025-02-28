@@ -128,4 +128,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # Redirect to login page
 LOGIN_URL = "/relationship_app/login/"
 
-AUTH_USER_MODEL = "relationship_app.CustomUser"
+AUTH_USER_MODEL = "bookshelf.CustomUser"

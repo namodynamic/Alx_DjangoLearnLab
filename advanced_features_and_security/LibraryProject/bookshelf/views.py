@@ -29,12 +29,12 @@ def create_groups_and_permissions():
     )
    
 def index(request):
-    return render(request, template_name="relationship_app/index.html")
+    return render(request, template_name="bookshelf/index.html")
 
-def list_books(request):
+def book_list(request):
     books = Book.objects.all()
     context = {"books": books}
-    return render(request, "bookshelf/list_books.html", context)    
+    return render(request, "bookshelf/book_list.html", context)    
     
 @permission_required('bookshelf.can_create', raise_exception=True)
 def add_book(request):
@@ -43,7 +43,7 @@ def add_book(request):
         author_id = request.POST.get('author')
         author = get_object_or_404(Author, id=author_id)
         Book.objects.create(title=title, author=author)
-        return redirect('bookshelf:list_books')
+        return redirect('bookshelf:book_list')
     authors = Author.objects.all()
     return render(request, 'bookshelf/add_book.html', {'authors': authors})
 
@@ -54,7 +54,7 @@ def edit_book(request, book_id):
         book.title = request.POST.get('title')
         book.author = get_object_or_404(Author, id=request.POST.get('author'))
         book.save()
-        return redirect('bookshelf:list_books')
+        return redirect('bookshelf:book_list')
     authors = Author.objects.all()
     return render(request, 'bookshelf/edit_book.html', {'book': book, 'authors': authors})
 
@@ -63,6 +63,6 @@ def delete_book(request, book_id):
     book = get_object_or_404(Book, id=book_id)
     if request.method == "POST":
         book.delete()
-        return redirect('bookshelf:list_books')
+        return redirect('bookshelf:book_list')
     return render(request, 'bookshelf/delete_book.html', {'book': book})    
     

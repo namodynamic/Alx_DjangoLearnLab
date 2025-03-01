@@ -3,7 +3,7 @@ from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import Group, Permission
 from django.contrib.contenttypes.models import ContentType
 from .models import Book, Author
-from .forms import BookSearchForm
+from .forms import ExampleForm
 
 def create_groups_and_permissions():
     # Create groups
@@ -68,10 +68,10 @@ def delete_book(request, book_id):
     return render(request, 'bookshelf/delete_book.html', {'book': book})    
     
 def search_books(request):
-    form = BookSearchForm()
+    form = ExampleForm()
     books = []
     if request.method == 'POST':
-        form = BookSearchForm(request.POST)
+        form = ExampleForm(request.POST)
         if form.is_valid():
             search_query = form.cleaned_data['search_query']
             books = Book.objects.filter(title__icontains=search_query)  # Safe query

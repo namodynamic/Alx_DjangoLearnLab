@@ -173,6 +173,11 @@ SECURE_CONTENT_TYPE_NOSNIFF = True
 SECURE_BROWSER_XSS_FILTER = True
 
 
+# Ensure that Django recognizes the original request as secure when behind a proxy
+# SECURE_PROXY_SSL_HEADER: This setting tells Django to look for the HTTP_X_FORWARDED_PROTO header to determine if the request was made over HTTPS. The value 'https' indicates that the request was secure.
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+
 # Step 4: Nginx Configuration
 # This configuration sets up Nginx to handle HTTP and HTTPS traffic for the Django application.
 

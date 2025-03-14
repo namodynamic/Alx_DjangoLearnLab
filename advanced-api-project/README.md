@@ -6,7 +6,13 @@
 
 - URL: `/api/books/`
 - Method: GET
-- Description: Lists all books in the system.
+- Description: Lists all books in the system with filtering, searching, and ordering capabilities.
+- Filtering: Use query parameters to filter by `title`, `author`, and `publication_year`.
+  - Example: `/api/books/?title=Book Title`
+- Searching: Use the `search` query parameter to search by `title` or `author`.
+  - Example: `/api/books/?search=Author Name`
+- Ordering: Use the `ordering` query parameter to order by `title` or `publication_year`.
+  - Example: `/api/books/?ordering=publication_year`
 
 ### DetailView
 

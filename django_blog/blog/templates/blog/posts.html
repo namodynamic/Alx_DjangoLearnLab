@@ -1,0 +1,18 @@
+{% extends "blog/base.html" %}
+{% block content %}
+<div class="container">
+    <h1>Blog Posts:</h1>
+    <div>
+        {% for post in posts %}
+        <ul>
+            <li>{{ post.title }} by {{ post.author }} on {{ post.published_date }}</li>
+        </ul>
+       <p class="content">
+        {{ post.content }}
+       </p> 
+        {% endfor %}
+    </div>
+
+    <button class="btn"><a href="{% url 'blog:home' %}">Back to Home</a></button>
+</div>
+{% endblock %}

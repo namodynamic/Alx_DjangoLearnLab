@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    {% load static %}
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Django Blog{% endblock %}</title>
@@ -10,10 +11,12 @@
     <header>
         <nav>
             <ul>
-                <li><a href="{% url 'home' %}">Home</a></li>
-                <li><a href="{% url 'posts' %}">Blog Posts</a></li>
-                <li><a href="{% url 'login' %}">Login</a></li>
-                <li><a href="{% url 'register' %}">Register</a></li>
+                
+                <li><a href="{% url 'blog:home' %}">Home</a></li>
+                <li><a href="{% url 'blog:posts' %}">Blog Posts</a></li>
+                <li><a href="{% url 'blog:login' %}">Login</a></li>
+                <li><a href="{% url 'blog:register' %}">Register</a></li>
+                <li><a href="{% url 'blog:profile' %}">Profile</a></li>
             </ul>
         </nav>
     </header>
@@ -21,6 +24,7 @@
     <div class="content">
         {% block content %}
         <!-- Page-specific content goes here -->
+       <h2>Welcome to Django Blog</h2>
         {% endblock %}
     </div>
 

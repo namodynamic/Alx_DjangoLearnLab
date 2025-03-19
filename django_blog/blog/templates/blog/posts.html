@@ -2,17 +2,17 @@
 {% block content %}
 <div class="container">
     <h1>Blog Posts:</h1>
-    <div>
+    <ul>
         {% for post in posts %}
-        <ul>
-            <li>{{ post.title }} by {{ post.author }} on {{ post.published_date }}</li>
-        </ul>
-       <p class="content">
-        {{ post.content }}
-       </p> 
+        <li>
+            <a href="{% url 'blog:post_detail' pk=post.pk %}">{{ post.title }} by {{ post.author }} on {{ post.published_date }}</a>
+            <p class="content">
+             {{ post.content |truncatewords:20 }}
+            </p> 
+        </li>
         {% endfor %}
-    </div>
+    </ul>
 
-    <button class="btn"><a href="{% url 'blog:home' %}">Back to Home</a></button>
+    <button class="btn"><a href="{% url 'blog:home' %}" class="btn-a">Back to Home</a></button>
 </div>
 {% endblock %}

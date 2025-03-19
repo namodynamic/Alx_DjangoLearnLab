@@ -43,3 +43,20 @@ This Django blog application allows users to create, read, update, and delete bl
 > - All forms include CSRF tokens `{% csrf_token %}` for security.
 > - Passwords and sensitive user data are handled securely using Django's built-in mechanisms.
 > - Users must be authenticated to create, update, or delete posts.
+
+### Comment Management
+
+- Users can read comments on blog posts.
+- Authenticated users can add comments to posts.
+- Users can edit or delete their own comments.
+
+### Permissions
+
+- Only authenticated users can post comments.
+- Users can only edit or delete their own comments.
+
+### Usage
+
+- Comments are displayed under each blog post.
+- Users can add a comment using the provided form.
+- Users can edit or delete their comments from the post detail view.

@@ -145,16 +145,23 @@ class PostDeleteView(DeleteView, LoginRequiredMixin, UserPassesTestMixin):
 class CommentCreateView(LoginRequiredMixin, CreateView):
     model = Comment
     form_class = CommentForm
-    template_name = 'blog/comment_form.html' 
 
+    def form_valid(self, form):
+            # Set the author of the comment to the logged-in user
+            form.instance.author = self.request.user
+            # Set the post_id of the form instance to the value from the URL parameters
+            form.instance.post_id = self.kwargs['pk']
+            # Call the parent class's form_valid method to complete the form validation process
+            return super().form_valid(form)
+    
     def get_success_url(self):
-        return reverse_lazy('blog:post_detail', kwargs={'pk': self.object.post.pk})  
+        return reverse_lazy('blog:post_detail', kwargs={'pk': self.object.post.pk}) 
+    
     
 class CommentUpdateView(LoginRequiredMixin, UpdateView):
     model = Comment
     form_class = CommentForm
     template_name = 'blog/comment_form.html'
-    success_url = reverse_lazy('blog:post_detail')
 
     def get_success_url(self):
         return reverse_lazy('blog:post_detail', kwargs={'pk': self.object.post.pk})
@@ -162,7 +169,6 @@ class CommentUpdateView(LoginRequiredMixin, UpdateView):
 class CommentDeleteView(LoginRequiredMixin, DeleteView):
     model = Comment
     template_name = 'blog/comment_confirm_delete.html'
-    success_url = reverse_lazy('blog:post_detail')
 
     def get_success_url(self):
         return reverse_lazy('blog:post_detail', kwargs={'pk': self.object.post.pk})

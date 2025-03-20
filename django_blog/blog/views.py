@@ -175,9 +175,24 @@ class CommentDeleteView(LoginRequiredMixin, DeleteView):
         return reverse_lazy('blog:post_detail', kwargs={'pk': self.object.post.pk})
     
 
-def tagged_posts(request, tag_name):
-    posts = Post.objects.filter(tags__name__in=[tag_name])
-    return render(request, 'blog/tagged_posts.html', { 'posts': posts, 'tag_name': tag_name })
+# def tagged_posts(request, tag_name):
+#     posts = Post.objects.filter(tags__name__in=[tag_name])
+#     return render(request, 'blog/tagged_posts.html', { 'posts': posts, 'tag_name': tag_name })
+
+class PostByTagListView(ListView):
+    model = Post
+    template_name = 'blog/tagged_posts.html'
+    context_object_name = 'posts'
+
+    def get_queryset(self):
+        tag_slug = self.kwargs['tag_slug']
+        return Post.objects.filter(tags__name__in=[tag_slug])
+     
+     # Add the tag_slug to the context so that it can be used in the template to display the tag
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['tag_slug'] = self.kwargs['tag_slug'] 
+        return context
     
 def search_posts(request):
     query = request.GET.get('q')

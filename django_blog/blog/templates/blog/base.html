@@ -19,6 +19,10 @@
                 <li><a href="{% url 'blog:profile' %}">Profile</a></li>
                 <li><a href="{% url 'blog:post_create' %}">Create Post</a></li>
                 <li><a href="{% url 'blog:logout' %}">Logout</a></li>
+                <form method="GET" action="{% url 'blog:search_posts' %}" style="display: inline-block;;">
+                    <input type="search" name="q" placeholder="Search posts..." required>
+                    <button type="submit">Search</button>
+                </form>
             </ul>
         </nav>
     </header>

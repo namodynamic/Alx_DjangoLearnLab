@@ -85,7 +85,21 @@
                   <p>{{ post.content|truncatewords:20 }}</p>
                   <div class="post-meta">
                     <span class="post-date">{{ post.published_date }}</span>
-                    <span class="post-read-time">5 min read</span>
+                    <span class="post-read-time">
+                      {% with read_time=post.get_read_time %}
+                      {% if read_time.0 == 0 %}
+                          {% if read_time.1 > 0 %}
+                              {{ read_time.1 }} secs read
+                          {% else %}
+                              Less than 1 min read
+                          {% endif %}
+                      {% elif read_time.0 == 1 %}
+                          {{ read_time.0 }} min read
+                      {% else %}
+                          {{ read_time.0 }} mins read
+                      {% endif %}
+                  {% endwith %}
+                    </span>
                   </div>
                   <a href="{% url 'blog:post_detail' post.pk %}" class="read-more">Continue Reading</a>
                 </div>

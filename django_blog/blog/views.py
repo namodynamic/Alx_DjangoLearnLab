@@ -20,7 +20,7 @@ def home(request):
         featured_post = random.choice(list(featured_posts)) if featured_posts else None 
     else:
         featured_post = None
-    posts = Post.objects.filter(published_date__isnull=False).order_by('-published_date')
+    posts = Post.objects.filter(published_date__isnull=False).order_by('-published_date')[:4]
     context = {
         'posts': posts,
         'featured_post': featured_post

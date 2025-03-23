@@ -31,8 +31,11 @@
         <a href="{% url 'blog:post_delete' post.pk %}" class="delete-post-btn">Delete Post</a>
       </div>
     </header>
-
+    
     <div class="post-content">
+      {% if post.image %}
+      <img src="{{ post.image.url }}" alt="{{ post.title }}" style="max-width: 100%; height: auto; margin-bottom: 20px;">
+      {% endif %}
       <p>{{ post.content }}</p>
       
     </div>

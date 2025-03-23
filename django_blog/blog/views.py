@@ -11,7 +11,8 @@ from django.db.models import Q
 
 
 def home(request):
-    return render(request, template_name="blog/base.html")
+    posts = Post.objects.filter(published_date__isnull=False).order_by('-published_date')
+    return render(request, template_name="blog/base.html", context={'posts': posts})
 
 
 def logout_view(request):

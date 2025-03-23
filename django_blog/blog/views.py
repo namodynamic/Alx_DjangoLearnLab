@@ -3,6 +3,8 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .forms import UserRegisterForm, UserUpdateForm, PostForm, CommentForm
 from .models import Post, Comment
+from django.db.models import Count
+import random
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.urls import reverse_lazy
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
@@ -11,8 +13,19 @@ from django.db.models import Q
 
 
 def home(request):
+    top_comment_count = Post.objects.annotate(comment_count=Count('comments')).order_by('-comment_count').values_list('comment_count', flat=True).first()
+
+    if top_comment_count is not None:
+        featured_posts = Post.objects.annotate(comment_count=Count('comments')).filter(comment_count=top_comment_count)
+        featured_post = random.choice(list(featured_posts)) if featured_posts else None 
+    else:
+        featured_post = None
     posts = Post.objects.filter(published_date__isnull=False).order_by('-published_date')
-    return render(request, template_name="blog/base.html", context={'posts': posts})
+    context = {
+        'posts': posts,
+        'featured_post': featured_post
+    }
+    return render(request, template_name="blog/base.html", context=context)
 
 
 def logout_view(request):

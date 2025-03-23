@@ -50,19 +50,13 @@
         <section class="hero">
           <div class="hero-content">
             <span class="featured-tag">Featured</span>
-            <h2>Building a Complete Django Application</h2>
+            {% if featured_post %}
+            <h2>{{ featured_post.title }}</h2>
             <p>
-              In the “Building a Complete Django Application” project, you will
-              develop a fully functional blog application using Django. This
-              project is designed for novice learners and covers essential
-              aspects of Django development, including setting up the project,
-              implementing user authentication, managing blog posts, adding
-              comment functionality, and enhancing the application with advanced
-              features such as tagging and search. By the end of this project,
-              you will have a comprehensive understanding of building and
-              deploying a real-world Django application.
+              {{ featured_post.content|truncatewords:50 }}
             </p>
-            <a href="/blog/mindfulness" class="read-more"> Read Article </a>
+            <a href="{% url 'blog:post_detail' pk=featured_post.pk %}" class="read-more"> Read Article </a>
+            {% endif %}
           </div>
           <div class="hero-image">
             <img

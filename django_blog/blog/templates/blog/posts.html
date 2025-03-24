@@ -1,44 +1,78 @@
-{% extends "blog/base.html" %}
-{% block content %}
+{% extends "blog/base.html" %} {% block content %}
+<main class="blog-list-container">
+  <div class="blog-list-header">
+    <h1>All Blog Posts</h1>
+    <div class="blog-filters">
+      <select class="filter-select">
+        <option value="newest">Newest First</option>
+        <option value="oldest">Oldest First</option>
+        <option value="popular">Most Popular</option>
+      </select>
+      <select class="category-select">
+        <option value="all">All Categories</option>
+        <option value="wellness">Wellness</option>
+        <option value="mindfulness">Mindfulness</option>
+        <option value="productivity">Productivity</option>
+        <option value="lifestyle">Lifestyle</option>
+      </select>
+    </div>
+  </div>
 
-<section class="latest-posts">
-    <h2 class="section-title">Blog Posts</h2>
+  <div class="blog-posts-grid">
     {% for post in posts %}
-    <div class="posts-grid">
-      <article class="post-card">
-        <div class="post-image">
+    <article class="blog-post-card">
+      <div class="post-image">
         {% if post.image %}
-       <img src="{{ post.image.url }}" alt="{{ post.title }}">
+        <img src="{{ post.image.url }}" alt="{{ post.title }}" />
         {% endif %}
+      </div>
+      <div class="post-content">
+        <h2 class="post-title">
+          <a href="/blog/post-1">{{ post.title }}</a>
+        </h2>
+        <div class="post-meta">
+          <div class="post-author-date">
+            <span class="post-author">By {{ post.author }}</span>
+            <span class="post-date">{{ post.published_date }}</span>
+          </div>
+          <span class="post-read-time">
+            {% with read_time=post.get_read_time %} 
+            {% if read_time.0 == 0 %} 
+            {% if read_time.1 > 0 %} 
+            {{ read_time.1 }} secs read 
+            {% else %} 
+            Less than 1 min read 
+            {% endif %} 
+            {% elif read_time.0 == 1 %}
+             {{ read_time.0 }} min read 
+             {% else %} 
+             {{ read_time.0 }} mins read {% endif %} 
+             {% endwith %}
+          </span>
         </div>
-        <div class="post-content">
-          <span class="post-category">Wellness</span>
-          <h3>{{ post.title }} by <span>{{ post.author }}</span></h3>
-          <p>{{ post.content |truncatewords:20 }}</p>
-          <div class="post-meta">
-            <span class="post-date">
-                {{ post.published_date }}
-            </span>
-            <span class="post-read-time">
-              {% with read_time=post.get_read_time %}
-              {% if read_time.0 == 0 %}
-                  {% if read_time.1 > 0 %}
-                      {{ read_time.1 }} secs read
-                  {% else %}
-                      Less than 1 min read
-                  {% endif %}
-              {% elif read_time.0 == 1 %}
-                  {{ read_time.0 }} min read
-              {% else %}
-                  {{ read_time.0 }} mins read
-              {% endif %}
-          {% endwith %}
-            </span>
+        <p class="post-excerpt">{{ post.content|truncatewords:40 }}</p>
+        <div class="post-tags">
+          {% for tag in post.tags.all %}
+          <a href="{% url 'blog:tagged_posts' tag.name %}" class="tag"
+            >{{ tag.name }}</a
+          >
+          {% endfor %}
         </div>
-        <a href="{% url 'blog:post_detail' pk=post.pk %}" class="read-more">Continue Reading</a>
-        </div>
+        <a href="{% url 'blog:post_detail' post.pk %}" class="continue-reading"
+          >Continue Reading</a
+        >
+      </div>
     </article>
-</div>
-{% endfor %}
-    </section>
+    {% endfor %}
+  </div>
+
+  <div class="pagination">
+    <a href="#" class="pagination-link active">1</a>
+    <a href="#" class="pagination-link">2</a>
+    <a href="#" class="pagination-link">3</a>
+    <span class="pagination-ellipsis">...</span>
+    <a href="#" class="pagination-link">10</a>
+    <a href="#" class="pagination-link pagination-next">Next →</a>
+  </div>
+</main>
 {% endblock %}

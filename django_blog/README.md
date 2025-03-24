@@ -1,5 +1,8 @@
 # Django Blog Authentication System
 
+![Frontend-home-page](<Screenshot 2025-03-24 at 4.09.46 am.png>)
+![Frontend-All Posts-page](<Screenshot 2025-03-24 at 4.09.57 am.png>)
+
 ## Overview
 
 This project includes a comprehensive user authentication system for a Django blog. It supports user registration, login, logout, and profile management.

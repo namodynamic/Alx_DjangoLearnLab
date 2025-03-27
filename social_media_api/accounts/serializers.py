@@ -20,7 +20,7 @@ class CustomUserRegistrationSerializer(serializers.ModelSerializer):
     last_name = serializers.CharField()
     password2 = serializers.CharField(write_only=True, required=True)
 
-    token = serializers.CharField()
+    token = serializers.SerializerMethodField() # Custom field to return token: Output-only field
     
     class Meta:
         model = CustomUser
